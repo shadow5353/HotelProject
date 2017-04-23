@@ -1,8 +1,8 @@
 package Domain;
 
-import technical.DBFacade;
-import technical.Encrypt;
-import technical.MessageDialog;
+import Technical.DBFacade;
+import Technical.Encrypt;
+import Technical.MessageDialog;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;

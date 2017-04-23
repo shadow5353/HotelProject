@@ -1,5 +1,5 @@
-import ui.LoginGUI;
-import ui.MainFrame;
+import GUI.LoginGUI;
+import GUI.MainFrame;
 
 /**
  * Created by Jacob on 18-04-2017.

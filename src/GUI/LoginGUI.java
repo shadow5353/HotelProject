@@ -1,7 +1,6 @@
 package GUI;
 
-import Domain.Login;
-import Domain.UserInfo;
+import Domain.LoginController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,31 +24,48 @@ public class LoginGUI extends JFrame {
         this.setFocusable(true);
         this.add(textFields_Button());
         this.setVisible(true);
+        this.setTitle("Login");
 
-        loginUser();
+        enterEvent();
+        loginButtonEvent();
     }
 
-    private void loginUser() {
+    private void enterEvent() {
+        passwordField.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginUser();
+            }
+        });
+    }
+
+    private void loginButtonEvent() {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Login login = new Login();
-
-                String username = userNameField.getText();
-                String password = passwordField.getText();
-
-                boolean found = login.login(username, password);
-
-                if(found) {
-                    JOptionPane.showMessageDialog(null, "You have been logged in!");
-                    setVisible(false);
-
-                    new MainFrame(login.getUserID()).setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Wrong username or password!");
-                }
+                loginUser();
             }
         });
+    }
+
+    /**
+     * LoginController the user
+     */
+    private void loginUser() {
+        LoginController loginController = new LoginController();
+
+        String username = userNameField.getText();
+        String password = passwordField.getText();
+
+        boolean found = loginController.login(username, password);
+
+        if(found) {
+            setVisible(false);
+
+            new MainFrame(loginController.getUserID()).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Wrong username or password!");
+        }
     }
 
     public JPanel textFields_Button() {

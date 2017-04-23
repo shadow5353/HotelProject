@@ -1,4 +1,4 @@
-package technical;
+package Technical;
 
 import javax.swing.*;
 

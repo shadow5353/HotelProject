@@ -1,17 +1,27 @@
 package GUI;
 
-import Domain.UserInfo;
-
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
+
+import Domain.UserInfo;
 
 /**
  * Created by Jacob on 18-04-2017.
  */
 
 public class MainFrame extends JFrame {
-    private JButton reservationButton, restaurantButton, arrangementsButton, priceListButton, managementButton, logoutButton;
-    private JLabel headingLabel, nameLabel, loggedInAsLabel;
-    private JPanel panel;
+    private JLabel headline;
+    private JPanel mainPanel;
+    private JMenuBar menu;
+    private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
+            servicesMenu, mainMenu;
+    private JMenuItem viewAllArrangementsButton, viewAllCateringsButton, viewAllReservationButton, viewAllUsersButton,
+            viewMenuButton, viewRoomsButton, viewServicesButton, logoutButton, createReservationButton, addUserButton,
+            addToMenuButton, addServiceButton, addRoomButton, addCateringsButton, addArrangementButton,
+            orderCateringButton, dailyOverviewButton;
     private UserInfo userInfo;
 
     public MainFrame(int userID) {
@@ -19,131 +29,193 @@ public class MainFrame extends JFrame {
 
         this.setTitle("Hotel System");
 
+        int inset = 50;
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds(inset, inset,
+                screenSize.width  - inset*2,
+                screenSize.height - inset*2);
+
         initComponents();
         checkAdmin();
+        addUserButtonEvent();
     }
 
+    protected void createInternalGUI(JInternalFrame frame) {
+        frame.setVisible(true);
+
+        try {
+            frame.setSelected(true);
+        } catch (PropertyVetoException e) {}
+
+        JDesktopPane desktop = new JDesktopPane();
+        desktop.add(frame);
+
+//        desktop.getDesktopManager().maximizeFrame(frame);
+
+        setContentPane(desktop);
+    }
+
+    /**
+     * Check if the user is a admin, if an admin it will show the management button
+     */
     private void checkAdmin() {
         if(userInfo.getIsAdmin()) {
-            managementButton.setVisible(true);
+            managementMenu.setVisible(true);
         } else {
-            managementButton.setVisible(false);
+            managementMenu.setVisible(false);
         }
+    }
+
+    private void addUserButtonEvent() {
+        addUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createInternalGUI(new CreateUser());
+            }
+        });
     }
 
     /**
      * Setting the components for the main form.
      */
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        panel = new JPanel();
-        headingLabel = new JLabel();
-        reservationButton = new JButton();
-        restaurantButton = new JButton();
-        arrangementsButton = new JButton();
-        priceListButton = new JButton();
-        managementButton = new JButton();
-        logoutButton = new JButton();
-        loggedInAsLabel = new JLabel();
-        nameLabel = new JLabel();
+        mainPanel = new javax.swing.JPanel();
+        headline = new javax.swing.JLabel();
+        menu = new javax.swing.JMenuBar();
+        nameMenu = new javax.swing.JMenu();
+        logoutButton = new javax.swing.JMenuItem();
+        mainMenu = new javax.swing.JMenu();
+        dailyOverviewButton = new JMenuItem();
+        reservationMenu = new javax.swing.JMenu();
+        createReservationButton = new javax.swing.JMenuItem();
+        viewAllReservationButton = new javax.swing.JMenuItem();
+        restaurantMenu = new javax.swing.JMenu();
+        viewMenuButton = new javax.swing.JMenuItem();
+        addToMenuButton = new javax.swing.JMenuItem();
+        cateringMenu = new javax.swing.JMenu();
+        orderCateringButton = new javax.swing.JMenuItem();
+        viewAllCateringsButton = new javax.swing.JMenuItem();
+        addCateringsButton = new javax.swing.JMenuItem();
+        arrangementMenu = new javax.swing.JMenu();
+        addArrangementButton = new javax.swing.JMenuItem();
+        viewAllArrangementsButton = new javax.swing.JMenuItem();
+        roomsMenu = new javax.swing.JMenu();
+        addRoomButton = new javax.swing.JMenuItem();
+        viewRoomsButton = new javax.swing.JMenuItem();
+        servicesMenu = new javax.swing.JMenu();
+        addServiceButton = new javax.swing.JMenuItem();
+        viewServicesButton = new javax.swing.JMenuItem();
+        managementMenu = new javax.swing.JMenu();
+        addUserButton = new javax.swing.JMenuItem();
+        viewAllUsersButton = new javax.swing.JMenuItem();
+
+        getContentPane().setLayout(new java.awt.CardLayout());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(400, 400));
 
-        panel.setPreferredSize(new java.awt.Dimension(500, 500));
+        mainPanel.add(headline);
 
-        headingLabel.setFont(new java.awt.Font("Dialog", 1, 25)); // NOI18N
-        headingLabel.setText("Hotel System");
+        headline.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        headline.setText("Welcome " + userInfo.getName());
 
-        reservationButton.setLabel("Reservation");
+        menu.setForeground(new java.awt.Color(102, 102, 102));
 
-        restaurantButton.setLabel("Restaurant");
-        restaurantButton.setMaximumSize(new java.awt.Dimension(98, 32));
-        restaurantButton.setMinimumSize(new java.awt.Dimension(98, 32));
+        nameMenu.setText(userInfo.getName());
 
-        arrangementsButton.setLabel("Arrangements");
+        logoutButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        logoutButton.setText("Logout");
 
-        priceListButton.setLabel("Price List");
+        nameMenu.add(logoutButton);
 
-        managementButton.setLabel("Management");
+        menu.add(nameMenu);
 
-        logoutButton.setLabel("Log Out");
+        mainMenu.setText("Start Page");
 
-        loggedInAsLabel.setText("Logged In as:");
+        dailyOverviewButton.setText("Daily Overview");
 
-        nameLabel.setText(userInfo.getName());
+        mainMenu.add(dailyOverviewButton);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(panel);
-        panel.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(113, 113, 113)
-                                                .addComponent(headingLabel))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(60, 60, 60)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(managementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                                        .addComponent(arrangementsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(reservationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                                .addGap(38, 38, 38)
-                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(restaurantButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(priceListButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(154, 154, 154)
-                                                .addComponent(loggedInAsLabel))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(140, 140, 140)
-                                                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(174, 174, 174)
-                                                .addComponent(nameLabel)))
-                                .addContainerGap(63, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(headingLabel)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(reservationButton)
-                                        .addComponent(restaurantButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(arrangementsButton)
-                                        .addComponent(priceListButton))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(managementButton)
-                                .addGap(10, 10, 10)
-                                .addComponent(loggedInAsLabel)
-                                .addGap(8, 8, 8)
-                                .addComponent(nameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(logoutButton)
-                                .addContainerGap(29, Short.MAX_VALUE))
-        );
+        menu.add(mainMenu);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
-                                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-        );
+        reservationMenu.setText("Reservation");
 
-        pack();
+        createReservationButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        createReservationButton.setText("Create Reservation");
+        reservationMenu.add(createReservationButton);
+
+        viewAllReservationButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        viewAllReservationButton.setText("View All Reservations");
+        reservationMenu.add(viewAllReservationButton);
+
+        menu.add(reservationMenu);
+
+        restaurantMenu.setText("Restaurant");
+
+        viewMenuButton.setText("View Menu");
+        restaurantMenu.add(viewMenuButton);
+
+        addToMenuButton.setText("Add to Menu");
+        restaurantMenu.add(addToMenuButton);
+
+        menu.add(restaurantMenu);
+
+        cateringMenu.setText("Catering");
+
+        orderCateringButton.setText("Order Catering");
+        cateringMenu.add(orderCateringButton);
+
+        viewAllCateringsButton.setText("View All Caterings");
+        cateringMenu.add(viewAllCateringsButton);
+
+        addCateringsButton.setText("Add Catering");
+
+        cateringMenu.add(addCateringsButton);
+
+        menu.add(cateringMenu);
+
+        arrangementMenu.setText("Arrangement");
+
+        addArrangementButton.setText("Add Arrangement");;
+        arrangementMenu.add(addArrangementButton);
+
+        viewAllArrangementsButton.setText("View All Arrangements");
+        arrangementMenu.add(viewAllArrangementsButton);
+
+        menu.add(arrangementMenu);
+
+        roomsMenu.setText("Rooms");
+
+        addRoomButton.setText("Add Room");
+        roomsMenu.add(addRoomButton);
+
+        viewRoomsButton.setText("View Rooms");
+        roomsMenu.add(viewRoomsButton);
+
+        menu.add(roomsMenu);
+
+        servicesMenu.setText("Services");
+
+        addServiceButton.setText("Add Service");
+        servicesMenu.add(addServiceButton);
+
+        viewServicesButton.setText("View Services");
+        servicesMenu.add(viewServicesButton);
+
+        menu.add(servicesMenu);
+
+        managementMenu.setText("Management");
+
+        addUserButton.setText("Add User");
+        managementMenu.add(addUserButton);
+
+        viewAllUsersButton.setText("View All Users");
+        managementMenu.add(viewAllUsersButton);
+
+        menu.add(managementMenu);
+
+        setJMenuBar(menu);
+
+        add(mainPanel);
     }
 }

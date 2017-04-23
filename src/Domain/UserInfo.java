@@ -1,6 +1,6 @@
 package Domain;
 
-import technical.DBFacade;
+import Technical.DBFacade;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

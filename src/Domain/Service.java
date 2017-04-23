@@ -1,7 +1,7 @@
 package Domain;
 
-import technical.DBFacade;
-import technical.MessageDialog;
+import Technical.DBFacade;
+import Technical.MessageDialog;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;

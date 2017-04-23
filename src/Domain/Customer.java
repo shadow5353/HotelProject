@@ -1,9 +1,8 @@
 package Domain;
 
-import technical.DBFacade;
-import technical.MessageDialog;
+import Technical.DBFacade;
+import Technical.MessageDialog;
 
-import javax.swing.*;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

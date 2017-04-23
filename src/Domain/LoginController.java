@@ -1,11 +1,9 @@
 package Domain;
 
-import technical.DBFacade;
-import technical.Encrypt;
+import Technical.DBFacade;
+import Technical.Encrypt;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

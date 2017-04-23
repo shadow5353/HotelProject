@@ -1,4 +1,4 @@
-package technical;
+package Technical;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

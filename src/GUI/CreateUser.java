@@ -1,4 +1,4 @@
-package ui;
+package GUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,13 +10,21 @@ import java.awt.event.FocusListener;
 /**
  * Created by Kasper on 21-04-2017.
  */
-public class CreateUser extends JPanel {
-    JTextField username, name;
-    JLabel createuser, usernameLabel, passwordLabel, confirmPasswordLabel, nameLabel;
-    JPasswordField password, confirmPassword;
-    JButton createButton;
+public class CreateUser extends JInternalFrame {
+    private JPanel panel;
+    private JTextField username, name;
+    private JLabel createuser, usernameLabel, passwordLabel, confirmPasswordLabel, nameLabel;
+    private JPasswordField password, confirmPassword;
+    private JButton createButton;
 
     public CreateUser() {
+        int inset = 50;
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds(inset, inset,
+                screenSize.width  - inset*2,
+                screenSize.height - inset*2);
+
+        panel = new JPanel();
         this.setLayout(new GridBagLayout());
         Dimension sizeOfLabel = new Dimension(130, 18);
         GridBagConstraints c = new GridBagConstraints();
@@ -24,7 +32,13 @@ public class CreateUser extends JPanel {
         jTextFields(c);
         createButton = new JButton("Create");
         c.gridy = 6;
-        this.add(createButton, c);
+        panel.add(createButton, c);
+
+        ((javax.swing.plaf.basic.BasicInternalFrameUI)
+                this.getUI()).setNorthPane(null);
+
+
+        this.add(panel);
     }
 
     private void jTextFields(GridBagConstraints c) {
@@ -46,7 +60,7 @@ public class CreateUser extends JPanel {
         });
         c.gridx = 2;
         c.gridy = 2;
-        this.add(name, c);
+        panel.add(name, c);
         username = new JTextField("Will be your username");
         username.addFocusListener(new FocusListener() {
             @Override
@@ -84,7 +98,8 @@ public class CreateUser extends JPanel {
         });
         password.setPreferredSize(sizeOfField);
         c.gridy = 4;
-        this.add(password, c);
+        panel.add(password, c);
+
         confirmPassword = new JPasswordField("Passwor");
         confirmPassword.setPreferredSize(sizeOfField);
         confirmPassword.addFocusListener(new FocusListener() {
@@ -102,7 +117,7 @@ public class CreateUser extends JPanel {
             }
         });
         c.gridy = 5;
-        this.add(confirmPassword, c);
+        panel.add(confirmPassword, c);
     }
 
     private void jLabels(Dimension sizeOfLabel, GridBagConstraints c) {
@@ -112,25 +127,25 @@ public class CreateUser extends JPanel {
         c.gridy = 1;
         c.gridwidth = 2;
         c.insets = new Insets(0, 0, 25, 0);
-        this.add(createuser, c);
+        panel.add(createuser, c);
         c.insets = new Insets(0, 10, 8, 0);
         nameLabel = new JLabel("Name: ", SwingConstants.RIGHT);
         nameLabel.setPreferredSize(sizeOfLabel);
         c.gridy = 2;
         c.gridwidth = 1;
-        this.add(nameLabel, c);
+        panel.add(nameLabel, c);
         usernameLabel = new JLabel("Email: ", SwingConstants.RIGHT);
         usernameLabel.setPreferredSize(sizeOfLabel);
         c.gridy = 3;
-        this.add(usernameLabel, c);
+        panel.add(usernameLabel, c);
         passwordLabel = new JLabel("Password: ", SwingConstants.RIGHT);
         passwordLabel.setPreferredSize(sizeOfLabel);
         c.gridy = 4;
-        this.add(passwordLabel, c);
+        panel.add(passwordLabel, c);
         confirmPasswordLabel = new JLabel("Confirm password: ", SwingConstants.RIGHT);
         confirmPasswordLabel.setPreferredSize(sizeOfLabel);
         c.gridy = 5;
-        this.add(confirmPasswordLabel, c);
+        panel.add(confirmPasswordLabel, c);
     }
 
 }
