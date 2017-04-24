@@ -10,21 +10,13 @@ import java.awt.event.FocusListener;
 /**
  * Created by Kasper on 21-04-2017.
  */
-public class CreateUser extends JInternalFrame {
-    private JPanel panel;
+public class CreateUser extends JPanel {
     private JTextField username, name;
     private JLabel createuser, usernameLabel, passwordLabel, confirmPasswordLabel, nameLabel;
     private JPasswordField password, confirmPassword;
     private JButton createButton;
 
     public CreateUser() {
-        int inset = 50;
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds(inset, inset,
-                screenSize.width  - inset*2,
-                screenSize.height - inset*2);
-
-        panel = new JPanel();
         this.setLayout(new GridBagLayout());
         Dimension sizeOfLabel = new Dimension(130, 18);
         GridBagConstraints c = new GridBagConstraints();
@@ -32,13 +24,8 @@ public class CreateUser extends JInternalFrame {
         jTextFields(c);
         createButton = new JButton("Create");
         c.gridy = 6;
-        panel.add(createButton, c);
+        this.add(createButton, c);
 
-        ((javax.swing.plaf.basic.BasicInternalFrameUI)
-                this.getUI()).setNorthPane(null);
-
-
-        this.add(panel);
     }
 
     private void jTextFields(GridBagConstraints c) {
@@ -60,7 +47,7 @@ public class CreateUser extends JInternalFrame {
         });
         c.gridx = 2;
         c.gridy = 2;
-        panel.add(name, c);
+        this.add(name, c);
         username = new JTextField("Will be your username");
         username.addFocusListener(new FocusListener() {
             @Override
@@ -98,7 +85,7 @@ public class CreateUser extends JInternalFrame {
         });
         password.setPreferredSize(sizeOfField);
         c.gridy = 4;
-        panel.add(password, c);
+        this.add(password, c);
 
         confirmPassword = new JPasswordField("Passwor");
         confirmPassword.setPreferredSize(sizeOfField);
@@ -117,7 +104,7 @@ public class CreateUser extends JInternalFrame {
             }
         });
         c.gridy = 5;
-        panel.add(confirmPassword, c);
+        this.add(confirmPassword, c);
     }
 
     private void jLabels(Dimension sizeOfLabel, GridBagConstraints c) {
@@ -127,25 +114,25 @@ public class CreateUser extends JInternalFrame {
         c.gridy = 1;
         c.gridwidth = 2;
         c.insets = new Insets(0, 0, 25, 0);
-        panel.add(createuser, c);
+        this.add(createuser, c);
         c.insets = new Insets(0, 10, 8, 0);
         nameLabel = new JLabel("Name: ", SwingConstants.RIGHT);
         nameLabel.setPreferredSize(sizeOfLabel);
         c.gridy = 2;
         c.gridwidth = 1;
-        panel.add(nameLabel, c);
+        this.add(nameLabel, c);
         usernameLabel = new JLabel("Email: ", SwingConstants.RIGHT);
         usernameLabel.setPreferredSize(sizeOfLabel);
         c.gridy = 3;
-        panel.add(usernameLabel, c);
+        this.add(usernameLabel, c);
         passwordLabel = new JLabel("Password: ", SwingConstants.RIGHT);
         passwordLabel.setPreferredSize(sizeOfLabel);
         c.gridy = 4;
-        panel.add(passwordLabel, c);
+        this.add(passwordLabel, c);
         confirmPasswordLabel = new JLabel("Confirm password: ", SwingConstants.RIGHT);
         confirmPasswordLabel.setPreferredSize(sizeOfLabel);
         c.gridy = 5;
-        panel.add(confirmPasswordLabel, c);
+        this.add(confirmPasswordLabel, c);
     }
 
 }

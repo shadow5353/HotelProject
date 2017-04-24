@@ -13,8 +13,9 @@ import Domain.UserInfo;
  */
 
 public class MainFrame extends JFrame {
+    private GridBagLayout grid = new GridBagLayout();
     private JLabel headline;
-    private JPanel mainPanel;
+    private JPanel mainPanel, createUser, dymanicPanel;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
             servicesMenu, mainMenu;
@@ -37,22 +38,8 @@ public class MainFrame extends JFrame {
 
         initComponents();
         checkAdmin();
+        dailyOverviewButtonEvent();
         addUserButtonEvent();
-    }
-
-    protected void createInternalGUI(JInternalFrame frame) {
-        frame.setVisible(true);
-
-        try {
-            frame.setSelected(true);
-        } catch (PropertyVetoException e) {}
-
-        JDesktopPane desktop = new JDesktopPane();
-        desktop.add(frame);
-
-//        desktop.getDesktopManager().maximizeFrame(frame);
-
-        setContentPane(desktop);
     }
 
     /**
@@ -70,7 +57,19 @@ public class MainFrame extends JFrame {
         addUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createInternalGUI(new CreateUser());
+                mainPanel.setVisible(false);
+                createUser.setVisible(true);
+            }
+        });
+    }
+
+    private void dailyOverviewButtonEvent() {
+        dailyOverviewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createUser.setVisible(false);
+                mainPanel.setVisible(true);
+
             }
         });
     }
@@ -109,6 +108,8 @@ public class MainFrame extends JFrame {
         managementMenu = new javax.swing.JMenu();
         addUserButton = new javax.swing.JMenuItem();
         viewAllUsersButton = new javax.swing.JMenuItem();
+        createUser = new CreateUser();
+        dymanicPanel = new JPanel();
 
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -217,5 +218,20 @@ public class MainFrame extends JFrame {
         setJMenuBar(menu);
 
         add(mainPanel);
+
+        dymanicPanel.setLayout(grid);
+
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx=0;
+        gc.gridy=0;
+
+        dymanicPanel.add(mainPanel, gc);
+        dymanicPanel.add(createUser, gc);
+
+        mainPanel.setVisible(true);
+        createUser.setVisible(false);
+
+        this.add(dymanicPanel);
+
     }
 }

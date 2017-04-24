@@ -25,7 +25,7 @@ public class UserInfo {
         try {
             String name;
 
-            PreparedStatement ps = dbFacade.preparedStatement("SELECT fldName FROM tblUsers WHERE fldUserID = ?");
+            PreparedStatement ps = dbFacade.preparedStatement("SELECT fldName FROM tblUser WHERE fldUserID = ?");
 
             ps.setInt(1, this.userID);
 
@@ -49,7 +49,7 @@ public class UserInfo {
     public boolean getIsAdmin() {
         boolean isAdmin = false;
         try {
-            PreparedStatement ps = dbFacade.preparedStatement("SELECT fldAdmin FROM tblUsers WHERE fldUserID = ?");
+            PreparedStatement ps = dbFacade.preparedStatement("SELECT fldAdmin FROM tblUser WHERE fldUserID = ?");
 
             ps.setInt(1, this.userID);
 
