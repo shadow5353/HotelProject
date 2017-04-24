@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyVetoException;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import Domain.UserInfo;
 
@@ -22,7 +23,7 @@ public class MainFrame extends JFrame {
     private JMenuItem viewAllArrangementsButton, viewAllCateringsButton, viewAllReservationButton, viewAllUsersButton,
             viewMenuButton, viewRoomsButton, viewServicesButton, logoutButton, createReservationButton, addUserButton,
             addToMenuButton, addServiceButton, addRoomButton, addCateringsButton, addArrangementButton,
-            orderCateringButton, dailyOverviewButton;
+            orderCateringButton, dailyOverviewButton, exitButton;
     private UserInfo userInfo;
 
     public MainFrame(int userID) {
@@ -37,22 +38,58 @@ public class MainFrame extends JFrame {
                 screenSize.height - inset*2);
 
         initComponents();
-        checkAdmin();
-        dailyOverviewButtonEvent();
-        addUserButtonEvent();
+        events();
     }
 
     /**
      * Check if the user is a admin, if an admin it will show the management button
      */
     private void checkAdmin() {
-        if(userInfo.getIsAdmin()) {
-            managementMenu.setVisible(true);
-        } else {
+        if(!userInfo.getIsAdmin()) {
             managementMenu.setVisible(false);
+            addToMenuButton.setVisible(false);
+            addCateringsButton.setVisible(false);
+            addRoomButton.setVisible(false);
+            addServiceButton.setVisible(false);
         }
     }
 
+    /**
+     * Logout the program
+     */
+    private void logout() {
+        new LoginGUI().setVisible(true);
+        this.dispose();
+    }
+
+    /**
+     * Holds all the events for buttons
+     */
+    private void events() {
+        checkAdmin();
+        mainMenuButtonEvent();
+        addUserButtonEvent();
+        logoutButtonEvent();
+        exitButtonEvent();
+    }
+
+    /**
+     * ActionListener for logout button
+     * This will logout of the program
+     */
+    private void logoutButtonEvent() {
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logout();
+            }
+        });
+    }
+
+    /**
+     * ActionListener for addUserButton
+     * This will make add user panel visible
+     */
     private void addUserButtonEvent() {
         addUserButton.addActionListener(new ActionListener() {
             @Override
@@ -63,13 +100,30 @@ public class MainFrame extends JFrame {
         });
     }
 
-    private void dailyOverviewButtonEvent() {
+    /**
+     * ActionListener for mainMenu Button
+     * This will make the main menu/daily overview visible
+     */
+    private void mainMenuButtonEvent() {
         dailyOverviewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 createUser.setVisible(false);
                 mainPanel.setVisible(true);
 
+            }
+        });
+    }
+
+    /**
+     * ActionListener for exit Button
+     * This exit the program
+     */
+    private void exitButtonEvent() {
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
     }
@@ -110,6 +164,7 @@ public class MainFrame extends JFrame {
         viewAllUsersButton = new javax.swing.JMenuItem();
         createUser = new CreateUser();
         dymanicPanel = new JPanel();
+        exitButton = new JMenuItem();
 
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -118,16 +173,21 @@ public class MainFrame extends JFrame {
         mainPanel.add(headline);
 
         headline.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        headline.setText("Welcome " + userInfo.getName() + ": Test");
+        headline.setText("Welcome " + userInfo.getName());
 
         menu.setForeground(new java.awt.Color(102, 102, 102));
 
         nameMenu.setText(userInfo.getName());
 
-        logoutButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        logoutButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
         logoutButton.setText("Logout");
 
         nameMenu.add(logoutButton);
+
+        exitButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
+        exitButton.setText("Exit");
+
+        nameMenu.add(exitButton);
 
         menu.add(nameMenu);
 
@@ -141,7 +201,7 @@ public class MainFrame extends JFrame {
 
         reservationMenu.setText("Reservation");
 
-        createReservationButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        createReservationButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
         createReservationButton.setText("Create Reservation");
         reservationMenu.add(createReservationButton);
 
