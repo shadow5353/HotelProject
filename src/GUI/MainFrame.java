@@ -118,7 +118,7 @@ public class MainFrame extends JFrame {
         mainPanel.add(headline);
 
         headline.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        headline.setText("Welcome " + userInfo.getName());
+        headline.setText("Welcome " + userInfo.getName() + ": Test");
 
         menu.setForeground(new java.awt.Color(102, 102, 102));
 
