@@ -40,6 +40,17 @@ public class MainFrame extends JFrame {
         initComponents();
         events();
     }
+    /**
+     * Holds all the events for buttons
+     */
+    private void events() {
+        checkAdmin();
+        mainMenuButtonEvent();
+        addUserButtonEvent();
+        logoutButtonEvent();
+        exitButtonEvent();
+    }
+
 
     /**
      * Check if the user is a admin, if an admin it will show the management button
@@ -62,16 +73,6 @@ public class MainFrame extends JFrame {
         this.dispose();
     }
 
-    /**
-     * Holds all the events for buttons
-     */
-    private void events() {
-        checkAdmin();
-        mainMenuButtonEvent();
-        addUserButtonEvent();
-        logoutButtonEvent();
-        exitButtonEvent();
-    }
 
     /**
      * ActionListener for logout button
