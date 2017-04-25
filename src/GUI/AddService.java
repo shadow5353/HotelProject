@@ -2,7 +2,9 @@ package GUI;
 
 import Business.InputCheck;
 import Domain.Room;
+import Domain.Service;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -10,38 +12,38 @@ import java.math.BigDecimal;
 /**
  * Created by Jacob on 25-04-2017.
  */
-public class AddRoom extends javax.swing.JPanel {
-    private javax.swing.JButton addRoomButton;
+public class AddService extends JPanel {
+    private javax.swing.JButton addServiceButton;
     private javax.swing.JTextArea descriptionField;
     private javax.swing.JLabel descriptionLabel;
     private javax.swing.JLabel headline;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField priceField;
     private javax.swing.JLabel priceLabel;
-    private javax.swing.JTextField roomSizeField;
-    private javax.swing.JLabel roomSizeLabel;
+    private javax.swing.JTextField serviceNameField;
+    private javax.swing.JLabel serviceNameLabel;
 
     /**
      * Creates new form AddRoom
      */
-    public AddRoom() {
+    public AddService() {
         initComponents();
         addRoomButtonEvent();
     }
 
     private void addRoomButtonEvent() {
-        addRoomButton.addActionListener(new ActionListener() {
+        addServiceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Room room = new Room();
+                Service service = new Service();
 
-                String roomSize = roomSizeField.getText();
+                String serviceName = serviceNameField.getText();
                 String description = descriptionField.getText();
                 BigDecimal price = InputCheck.checkForBigDecimal(priceField);
 
-                room.insertRoom(roomSize, description, price);
+                service.insertService(serviceName, description, price);
 
-                roomSizeField.setText("");
+                serviceNameField.setText("");
                 descriptionField.setText("");
                 priceField.setText("");
             }
@@ -51,19 +53,19 @@ public class AddRoom extends javax.swing.JPanel {
     private void initComponents() {
 
         headline = new javax.swing.JLabel();
-        roomSizeField = new javax.swing.JTextField();
-        roomSizeLabel = new javax.swing.JLabel();
+        serviceNameField = new javax.swing.JTextField();
+        serviceNameLabel = new javax.swing.JLabel();
         descriptionLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionField = new javax.swing.JTextArea();
         priceField = new javax.swing.JTextField();
         priceLabel = new javax.swing.JLabel();
-        addRoomButton = new javax.swing.JButton();
+        addServiceButton = new javax.swing.JButton();
 
         headline.setFont(new java.awt.Font("Dialog", 1, 25)); // NOI18N
-        headline.setText("Add Room");
+        headline.setText("Add Service");
 
-        roomSizeLabel.setText("Room Size:");
+        serviceNameLabel.setText("Service Name:");
 
         descriptionLabel.setText("Description:");
 
@@ -73,7 +75,7 @@ public class AddRoom extends javax.swing.JPanel {
 
         priceLabel.setText("Price:");
 
-        addRoomButton.setText("Add Room");
+        addServiceButton.setText("Add Service");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -92,11 +94,11 @@ public class AddRoom extends javax.swing.JPanel {
                                                 .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(descriptionLabel)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(roomSizeLabel)
+                                                .addComponent(serviceNameLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(roomSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(serviceNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jScrollPane1)
-                                        .addComponent(addRoomButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(addServiceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,8 +108,8 @@ public class AddRoom extends javax.swing.JPanel {
                                 .addComponent(headline)
                                 .addGap(90, 90, 90)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(roomSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(roomSizeLabel))
+                                        .addComponent(serviceNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(serviceNameLabel))
                                 .addGap(18, 18, 18)
                                 .addComponent(descriptionLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -117,7 +119,7 @@ public class AddRoom extends javax.swing.JPanel {
                                         .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(priceLabel))
                                 .addGap(18, 18, 18)
-                                .addComponent(addRoomButton)
+                                .addComponent(addServiceButton)
                                 .addContainerGap(115, Short.MAX_VALUE))
         );
     }

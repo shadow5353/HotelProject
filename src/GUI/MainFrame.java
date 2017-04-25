@@ -16,7 +16,7 @@ import Domain.UserInfo;
 public class MainFrame extends JFrame {
     private GridBagLayout grid = new GridBagLayout();
     private JLabel headline;
-    private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel;
+    private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
             servicesMenu, mainMenu;
@@ -50,6 +50,7 @@ public class MainFrame extends JFrame {
         logoutButtonEvent();
         exitButtonEvent();
         addRoomButtonEvent();
+        addServiceButtonEvent();
     }
 
 
@@ -99,6 +100,7 @@ public class MainFrame extends JFrame {
                 mainPanel.setVisible(false);
                 createUser.setVisible(true);
                 addRoomPanel.setVisible(false);
+                addService.setVisible(false);
             }
         });
     }
@@ -114,6 +116,7 @@ public class MainFrame extends JFrame {
                 mainPanel.setVisible(true);
                 createUser.setVisible(false);
                 addRoomPanel.setVisible(false);
+                addService.setVisible(false);
 
             }
         });
@@ -125,6 +128,7 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 mainPanel.setVisible(false);
                 createUser.setVisible(false);
+                addService.setVisible(false);
                 addRoomPanel.setVisible(true);
             }
         });
@@ -143,6 +147,18 @@ public class MainFrame extends JFrame {
         });
     }
 
+    private void addServiceButtonEvent() {
+        addServiceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createUser.setVisible(false);
+                mainPanel.setVisible(false);
+                addRoomPanel.setVisible(false);
+                addService.setVisible(true);
+            }
+        });
+    }
+
     /**
      * Setting the components for the main form.
      */
@@ -150,6 +166,7 @@ public class MainFrame extends JFrame {
 
         mainPanel = new javax.swing.JPanel();
         addRoomPanel = new AddRoom();
+        addService = new AddService();
         headline = new javax.swing.JLabel();
         menu = new javax.swing.JMenuBar();
         nameMenu = new javax.swing.JMenu();
@@ -304,10 +321,12 @@ public class MainFrame extends JFrame {
         dymanicPanel.add(mainPanel, gc);
         dymanicPanel.add(createUser, gc);
         dymanicPanel.add(addRoomPanel, gc);
+        dymanicPanel.add(addService, gc);
 
         mainPanel.setVisible(true);
         createUser.setVisible(false);
         addRoomPanel.setVisible(false);
+        addService.setVisible(false);
 
         this.add(dymanicPanel);
 
