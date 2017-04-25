@@ -16,7 +16,7 @@ import Domain.UserInfo;
 public class MainFrame extends JFrame {
     private GridBagLayout grid = new GridBagLayout();
     private JLabel headline;
-    private JPanel mainPanel, createUser, dymanicPanel;
+    private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
             servicesMenu, mainMenu;
@@ -49,6 +49,7 @@ public class MainFrame extends JFrame {
         addUserButtonEvent();
         logoutButtonEvent();
         exitButtonEvent();
+        addRoomButtonEvent();
     }
 
 
@@ -97,6 +98,7 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 mainPanel.setVisible(false);
                 createUser.setVisible(true);
+                addRoomPanel.setVisible(false);
             }
         });
     }
@@ -109,9 +111,21 @@ public class MainFrame extends JFrame {
         dailyOverviewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createUser.setVisible(false);
                 mainPanel.setVisible(true);
+                createUser.setVisible(false);
+                addRoomPanel.setVisible(false);
 
+            }
+        });
+    }
+
+    private void addRoomButtonEvent() {
+        addRoomButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.setVisible(false);
+                createUser.setVisible(false);
+                addRoomPanel.setVisible(true);
             }
         });
     }
@@ -135,6 +149,7 @@ public class MainFrame extends JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        addRoomPanel = new AddRoom();
         headline = new javax.swing.JLabel();
         menu = new javax.swing.JMenuBar();
         nameMenu = new javax.swing.JMenu();
@@ -288,9 +303,11 @@ public class MainFrame extends JFrame {
 
         dymanicPanel.add(mainPanel, gc);
         dymanicPanel.add(createUser, gc);
+        dymanicPanel.add(addRoomPanel, gc);
 
         mainPanel.setVisible(true);
         createUser.setVisible(false);
+        addRoomPanel.setVisible(false);
 
         this.add(dymanicPanel);
 
