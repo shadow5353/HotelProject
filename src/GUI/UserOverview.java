@@ -13,10 +13,10 @@ import java.sql.*;
  * Created by Bruger on 24-04-2017.
  */
 public class UserOverview extends JPanel {
-    private javax.swing.JButton updateButton;
-    private javax.swing.JLabel headline;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable users;
+    private JButton updateButton, deleteButton;
+    private JLabel headline;
+    private JScrollPane jScrollPane1;
+    private JTable users;
     private DefaultTableModel jtModel;
     private String[] tableColumnName = {"ID", "Name", "Email", "Admin"};
     private String[][] tableData = {};
@@ -27,14 +27,15 @@ public class UserOverview extends JPanel {
         initComponents();
         getUserOverview();
         updateButtonEvent();
-
+        deleteButtonEvent();
     }
+
     private void getUserOverview() {
         try {
             CallableStatement cl = dbFacade.callableStatement("{call userOverview}");
             ResultSet rs = cl.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
                 String email = rs.getString(3);
@@ -67,24 +68,39 @@ public class UserOverview extends JPanel {
         });
     }
 
-    private void initComponents() {
+    private void deleteButtonEvent() {
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = users.getSelectedRow();
+                int id = Integer.parseInt(users.getValueAt(row, 0).toString());
 
-        headline = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+                User user = new User();
+
+                user.deleteUser(id);
+
+                jtModel.removeRow(row);
+            }
+        });
+    }
+
+    private void initComponents() {
+        headline = new JLabel();
+        jScrollPane1 = new JScrollPane();
         jtModel = new DefaultTableModel(tableData, tableColumnName);
         users = new JTable(jtModel);
-        updateButton = new javax.swing.JButton();
+        updateButton = new JButton();
+        deleteButton = new JButton();
 
         users.setAutoCreateRowSorter(true);
 
         headline.setFont(new java.awt.Font("Dialog", 1, 25)); // NOI18N
         headline.setText("User Overview");
 
-
-
         jScrollPane1.setViewportView(users);
 
-        updateButton.setText("Update Users");
+        deleteButton.setText("Delete User");
+        updateButton.setText("Update User");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -98,6 +114,7 @@ public class UserOverview extends JPanel {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(deleteButton)
                                 .addComponent(updateButton)
                                 .addContainerGap())
         );
@@ -110,6 +127,7 @@ public class UserOverview extends JPanel {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(deleteButton)
                                         .addComponent(updateButton))
                                 .addContainerGap())
         );

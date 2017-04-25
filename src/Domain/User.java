@@ -20,14 +20,18 @@ public class User {
         messageDialog = new MessageDialog();
     }
 
-    public void deleteUser(int userID) throws SQLException {
-        CallableStatement cl = db.callableStatement("{call deleteUser(?)}");
-        cl.setInt(1, userID);
-        int rows = cl.executeUpdate();
-        if (rows > 0) {
-            messageDialog.deleteMessage("You successfully deleted user with ID =  " + userID);
-        } else {
-            messageDialog.errorMessage("No such ID found");
+    public void deleteUser(int userID) {
+        try {
+            CallableStatement cl = db.callableStatement("{call deleteUser(?)}");
+            cl.setInt(1, userID);
+            int rows = cl.executeUpdate();
+            if (rows > 0) {
+                messageDialog.deleteMessage("You successfully deleted user with ID = " + userID);
+            } else {
+                messageDialog.errorMessage("No such ID found");
+            }
+        } catch (SQLException e) {
+            e.getStackTrace();
         }
     }
 
@@ -57,10 +61,12 @@ public class User {
 
             ResultSet rs = cl.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 messageDialog.errorMessage("User already exists with this email: " + email);
             } else {
                 CallableStatement clInsert = db.callableStatement("{call insertUser(?, ?, ?, ?)}");
+
+                password = Encrypt.password(password);
 
                 clInsert.setString(1, name);
                 clInsert.setString(2, email);

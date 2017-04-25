@@ -171,6 +171,9 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 disablePanels();
+                dymanicPanel.remove(userOverviewPanel);
+                userOverviewPanel = new UserOverview();
+                dymanicPanel.add(userOverviewPanel);
                 userOverviewPanel.setVisible(true);
             }
         });
@@ -183,6 +186,7 @@ public class MainFrame extends JFrame {
         addService.setVisible(false);
         userOverviewPanel.setVisible(false);
     }
+
     /**
      * Setting the components for the main form.
      */
