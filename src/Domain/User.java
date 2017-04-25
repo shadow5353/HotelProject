@@ -24,6 +24,17 @@ public class User {
         messageDialog = new MessageDialog();
     }
 
+    public void deleteUser(int userID) throws SQLException {
+        CallableStatement cl = db.callableStatement("{call deleteUser(?)}");
+        cl.setInt(1, userID);
+        int rows = cl.executeUpdate();
+        if (rows > 0) {
+            messageDialog.deleteMessage("You successfully deleted user with ID =  " + userID);
+        } else {
+            messageDialog.errorMessage("No such ID found");
+        }
+    }
+
     public void insertUser(String name, String email, String password, boolean isAdmin) {
         this.name = name;
         this.email = email;

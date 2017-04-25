@@ -16,4 +16,8 @@ public class MessageDialog {
     public void infoMessage(String message) {
         JOptionPane.showMessageDialog(null, message, "Hotel System", JOptionPane.INFORMATION_MESSAGE);
     }
+    public  void deleteMessage(String message) {
+        JOptionPane.showMessageDialog(null, message, "You deleted successfully user:  ", JOptionPane.INFORMATION_MESSAGE );
+    }
+
 }
