@@ -3,18 +3,22 @@ package GUI;
 import Technical.DBFacade;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.sql.*;
 
 /**
  * Created by Bruger on 24-04-2017.
  */
 public class UserOverview extends JPanel {
-    private Object[][] data;
     private javax.swing.JButton updateButton;
     private javax.swing.JButton printButton;
     private javax.swing.JLabel headline;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable users;
+    private DefaultTableModel jtModel;
+    private String[] tableColumnName = {"ID", "Name", "Email", "Admin"};
+    private String[][] tableData = {};
     private DBFacade dbFacade = new DBFacade();
 
 
@@ -29,11 +33,14 @@ public class UserOverview extends JPanel {
             ResultSet rs = cl.executeQuery();
 
             while (rs.next()){
-                int iD = rs.getInt(1);
+                int id = rs.getInt(1);
                 String name = rs.getString(2);
                 String email = rs.getString(3);
                 boolean admin = rs.getBoolean(5);
 
+                Object[] newLine = {new Integer(id), name, email, new Boolean(admin)};
+
+                jtModel.addRow(newLine);
             }
         } catch (SQLException e) {
 
@@ -44,32 +51,17 @@ public class UserOverview extends JPanel {
 
         headline = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        users = new JTable();
+        jtModel = new DefaultTableModel(tableData, tableColumnName);
+        users = new JTable(jtModel);
         updateButton = new javax.swing.JButton();
         printButton = new javax.swing.JButton();
+
+        users.setAutoCreateRowSorter(true);
 
         headline.setFont(new java.awt.Font("Dialog", 1, 25)); // NOI18N
         headline.setText("User Overview");
 
-        users.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                        { new Integer(1), "Test Navn", "Test Email",  new Boolean(true)},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String [] {
-                        "ID", "Name", "Email", "Admin"
-                }
-        ) {
-            Class[] types = new Class [] {
-                    java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
 
         jScrollPane1.setViewportView(users);
 

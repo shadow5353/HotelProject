@@ -34,6 +34,10 @@ public class CreateUser extends JPanel {
 
                 User user = new User();
                 user.insertUser(userName, emailUserName, userPassword, checkedAdmin);
+
+                name.setText("");
+                username.setText("");
+                password.setText("");
             }
         }
         AddUser addUser = new AddUser();
