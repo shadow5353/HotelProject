@@ -14,10 +14,6 @@ import java.sql.SQLException;
 public class User {
     private DBFacade db;
     private MessageDialog messageDialog;
-    private String name;
-    private String email;
-    private String password;
-    private boolean isAdmin;
 
     public User() {
         db = new DBFacade();
@@ -35,11 +31,24 @@ public class User {
         }
     }
 
+    public void updateUser(int userID, String name, String email, boolean isAdmin) {
+        try {
+            CallableStatement cl = db.callableStatement("{call updateUser (?, ?, ?, ?)}");
+
+            cl.setInt(1, userID);
+            cl.setString(2, name);
+            cl.setString(3, email);
+            cl.setBoolean(4, isAdmin);
+
+            cl.executeUpdate();
+
+            messageDialog.infoMessage(name + " have been updated!");
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+    }
+
     public void insertUser(String name, String email, String password, boolean isAdmin) {
-        this.name = name;
-        this.email = email;
-        this.password = Encrypt.password(password);
-        this.isAdmin = isAdmin;
 
         try {
             CallableStatement cl = db.callableStatement("{call selectUser(?)}");
@@ -49,14 +58,14 @@ public class User {
             ResultSet rs = cl.executeQuery();
 
             if(rs.next()) {
-                messageDialog.errorMessage("User already exists with this email: " + this.email);
+                messageDialog.errorMessage("User already exists with this email: " + email);
             } else {
                 CallableStatement clInsert = db.callableStatement("{call insertUser(?, ?, ?, ?)}");
 
-                clInsert.setString(1, this.name);
-                clInsert.setString(2, this.email);
-                clInsert.setString(3, this.password);
-                clInsert.setBoolean(4, this.isAdmin);
+                clInsert.setString(1, name);
+                clInsert.setString(2, email);
+                clInsert.setString(3, password);
+                clInsert.setBoolean(4, isAdmin);
 
                 clInsert.executeUpdate();
 

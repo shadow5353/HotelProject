@@ -1,10 +1,12 @@
 package GUI;
 
+import Domain.User;
 import Technical.DBFacade;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 
 /**
@@ -12,7 +14,6 @@ import java.sql.*;
  */
 public class UserOverview extends JPanel {
     private javax.swing.JButton updateButton;
-    private javax.swing.JButton printButton;
     private javax.swing.JLabel headline;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable users;
@@ -25,9 +26,10 @@ public class UserOverview extends JPanel {
     public UserOverview() {
         initComponents();
         getUserOverview();
+        updateButtonEvent();
 
     }
-    public void getUserOverview() {
+    private void getUserOverview() {
         try {
             CallableStatement cl = dbFacade.callableStatement("{call userOverview}");
             ResultSet rs = cl.executeQuery();
@@ -38,13 +40,31 @@ public class UserOverview extends JPanel {
                 String email = rs.getString(3);
                 boolean admin = rs.getBoolean(5);
 
-                Object[] newLine = {new Integer(id), name, email, new Boolean(admin)};
+                Object[] newLine = {id, name, email, admin};
 
                 jtModel.addRow(newLine);
             }
         } catch (SQLException e) {
 
         }
+    }
+
+    private void updateButtonEvent() {
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = users.getSelectedRow();
+
+                int id = Integer.parseInt(users.getValueAt(row, 0).toString());
+                String name = users.getValueAt(row, 1).toString();
+                String email = users.getValueAt(row, 2).toString();
+                boolean admin = Boolean.parseBoolean(users.getValueAt(row, 3).toString());
+
+                User user = new User();
+
+                user.updateUser(id, name, email, admin);
+            }
+        });
     }
 
     private void initComponents() {
@@ -54,7 +74,6 @@ public class UserOverview extends JPanel {
         jtModel = new DefaultTableModel(tableData, tableColumnName);
         users = new JTable(jtModel);
         updateButton = new javax.swing.JButton();
-        printButton = new javax.swing.JButton();
 
         users.setAutoCreateRowSorter(true);
 
@@ -67,8 +86,6 @@ public class UserOverview extends JPanel {
 
         updateButton.setText("Update Users");
 
-        printButton.setText("Print Users");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,7 +97,6 @@ public class UserOverview extends JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(printButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(updateButton)
                                 .addContainerGap())
@@ -94,9 +110,8 @@ public class UserOverview extends JPanel {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(updateButton)
-                                        .addComponent(printButton))
+                                        .addComponent(updateButton))
                                 .addContainerGap())
         );
-    }// </editor-fold>
+    }
 }
