@@ -18,14 +18,14 @@ public class MainFrame extends JFrame {
     private GridBagLayout grid = new GridBagLayout();
     private JLabel headline;
     private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService, userOverviewPanel, roomOverviewPanel,
-            serviceOverviewPanel;
+            serviceOverviewPanel, orderServicePanel;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
             servicesMenu, mainMenu;
     private JMenuItem viewAllArrangementsButton, viewAllCateringsButton, viewAllReservationButton, viewAllUsersButton,
             viewMenuButton, viewRoomsButton, viewServicesButton, logoutButton, createReservationButton, addUserButton,
             addToMenuButton, addServiceButton, addRoomButton, addCateringsButton, addArrangementButton,
-            orderCateringButton, dailyOverviewButton, exitButton;
+            orderCateringButton, dailyOverviewButton, exitButton, orderServiceButton;
     private UserInfo userInfo;
 
     public MainFrame(int userID) {
@@ -57,6 +57,7 @@ public class MainFrame extends JFrame {
         userOverviewButtonEvent();
         viewAllRooms();
         serviceOverview();
+        orderServiceButton();
     }
 
 
@@ -196,6 +197,19 @@ public class MainFrame extends JFrame {
         });
     }
 
+    private void orderServiceButton() {
+        orderServiceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                dymanicPanel.remove(serviceOverviewPanel);
+                serviceOverviewPanel = new OrderService();
+                dymanicPanel.add(serviceOverviewPanel);
+                serviceOverviewPanel.setVisible(true);
+            }
+        });
+    }
+
     private void disablePanels() {
         mainPanel.setVisible(false);
         createUser.setVisible(false);
@@ -204,6 +218,7 @@ public class MainFrame extends JFrame {
         roomOverviewPanel.setVisible(false);
         userOverviewPanel.setVisible(false);
         serviceOverviewPanel.setVisible(false);
+        orderServicePanel.setVisible(false);
     }
 
     /**
@@ -242,12 +257,14 @@ public class MainFrame extends JFrame {
         managementMenu = new javax.swing.JMenu();
         addUserButton = new javax.swing.JMenuItem();
         viewAllUsersButton = new javax.swing.JMenuItem();
+        orderServiceButton = new JMenuItem();
         createUser = new CreateUser();
         dymanicPanel = new JPanel();
         exitButton = new JMenuItem();
         userOverviewPanel = new UserOverview();
         roomOverviewPanel = new RoomOverview();
         serviceOverviewPanel = new ServiceOverview();
+        orderServicePanel = new OrderService();
 
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -341,6 +358,9 @@ public class MainFrame extends JFrame {
 
         servicesMenu.setText("Services");
 
+        orderServiceButton.setText("Order Service");
+        servicesMenu.add(orderServiceButton);
+
         addServiceButton.setText("Add Service");
         servicesMenu.add(addServiceButton);
 
@@ -376,6 +396,7 @@ public class MainFrame extends JFrame {
         dymanicPanel.add(userOverviewPanel, gc);
         dymanicPanel.add(roomOverviewPanel, gc);
         dymanicPanel.add(serviceOverviewPanel, gc);
+        dymanicPanel.add(orderServicePanel, gc);
 
         disablePanels();
         mainPanel.setVisible(true);

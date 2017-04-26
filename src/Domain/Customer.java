@@ -7,6 +7,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by Jacob on 20-04-2017.
@@ -47,6 +48,25 @@ public class Customer {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Integer> getCustomerIDs() {
+        ArrayList<Integer> customerIDs = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = db.preparedStatement("SELECT fldServiceID");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                customerIDs.add(rs.getInt(1));
+            }
+
+        } catch (SQLException e) {
+
+        }
+
+        return customerIDs;
     }
 
     public void insertCustomer(String firstname, String lastname, String email, int phone, String address, String city, int postalcode) {
