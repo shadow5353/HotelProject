@@ -31,7 +31,7 @@ public class Room {
         this.price = price;
     }
 
-    // TODO get room info
+    // get room info
     public void getRoomInfo(int roomID) {
         try {
             CallableStatement cl = db.callableStatement("{(call selectRoom (?))}");
@@ -50,7 +50,35 @@ public class Room {
     }
 
     public void updateRoom(int roomID, String roomSize, String description, BigDecimal price) {
+        try {
+            CallableStatement cl = db.callableStatement("{call updateRoom (?, ?, ?, ?)}");
 
+            cl.setInt(1, roomID);
+            cl.setString(2, roomSize);
+            cl.setString(3, description);
+            cl.setBigDecimal(4, price);
+
+            cl.executeUpdate();
+
+            messageDialog.infoMessage("Room Number: " + roomID + " have been updated");
+
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+    }
+
+    public void deleteRoom(int roomID) {
+        try {
+            CallableStatement cl = db.callableStatement("{call deleteRoom (?)}");
+
+            cl.setInt(1, roomID);
+
+            cl.executeUpdate();
+
+            messageDialog.infoMessage("Room Number: " + roomID + " have been removed");
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
     }
 
     public ArrayList<Integer> getIDs() {

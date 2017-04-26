@@ -17,14 +17,14 @@ import oracle.jrockit.jfr.JFR;
 public class MainFrame extends JFrame {
     private GridBagLayout grid = new GridBagLayout();
     private JLabel headline;
-    private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService, userOverviewPanel;
+    private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService, userOverviewPanel, roomOverviewPanel;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
             servicesMenu, mainMenu;
     private JMenuItem viewAllArrangementsButton, viewAllCateringsButton, viewAllReservationButton, viewAllUsersButton,
             viewMenuButton, viewRoomsButton, viewServicesButton, logoutButton, createReservationButton, addUserButton,
             addToMenuButton, addServiceButton, addRoomButton, addCateringsButton, addArrangementButton,
-            orderCateringButton, dailyOverviewButton, exitButton, editRoomButton;
+            orderCateringButton, dailyOverviewButton, exitButton;
     private UserInfo userInfo;
 
     public MainFrame(int userID) {
@@ -53,8 +53,8 @@ public class MainFrame extends JFrame {
         exitButtonEvent();
         addRoomButtonEvent();
         addServiceButtonEvent();
-        editRoomButtonEvent();
         userOverviewButtonEvent();
+        viewAllRooms();
     }
 
 
@@ -68,7 +68,6 @@ public class MainFrame extends JFrame {
             addCateringsButton.setVisible(false);
             addRoomButton.setVisible(false);
             addServiceButton.setVisible(false);
-            editRoomButton.setVisible(false);
         }
     }
 
@@ -146,16 +145,6 @@ public class MainFrame extends JFrame {
         });
     }
 
-    private void editRoomButtonEvent() {
-        editRoomButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                disablePanels();
-
-            }
-        });
-    }
-
     private void addServiceButtonEvent() {
         addServiceButton.addActionListener(new ActionListener() {
             @Override
@@ -179,11 +168,25 @@ public class MainFrame extends JFrame {
         });
     }
 
+    private void viewAllRooms() {
+        viewRoomsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                dymanicPanel.remove(roomOverviewPanel);
+                roomOverviewPanel = new RoomOverview();
+                dymanicPanel.add(roomOverviewPanel);
+                roomOverviewPanel.setVisible(true);
+            }
+        });
+    }
+
     private void disablePanels() {
         mainPanel.setVisible(false);
         createUser.setVisible(false);
         addRoomPanel.setVisible(false);
         addService.setVisible(false);
+        roomOverviewPanel.setVisible(false);
         userOverviewPanel.setVisible(false);
     }
 
@@ -226,8 +229,8 @@ public class MainFrame extends JFrame {
         createUser = new CreateUser();
         dymanicPanel = new JPanel();
         exitButton = new JMenuItem();
-        editRoomButton = new JMenuItem();
         userOverviewPanel = new UserOverview();
+        roomOverviewPanel = new RoomOverview();
 
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -314,9 +317,6 @@ public class MainFrame extends JFrame {
         addRoomButton.setText("Add Room");
         roomsMenu.add(addRoomButton);
 
-        editRoomButton.setText("Edit Room");
-        roomsMenu.add(editRoomButton);
-
         viewRoomsButton.setText("View Rooms");
         roomsMenu.add(viewRoomsButton);
 
@@ -357,6 +357,7 @@ public class MainFrame extends JFrame {
         dymanicPanel.add(addRoomPanel, gc);
         dymanicPanel.add(addService, gc);
         dymanicPanel.add(userOverviewPanel, gc);
+        dymanicPanel.add(roomOverviewPanel, gc);
 
         disablePanels();
         mainPanel.setVisible(true);
