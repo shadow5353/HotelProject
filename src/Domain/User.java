@@ -22,7 +22,7 @@ public class User {
 
     public void deleteUser(int userID) {
         try {
-            CallableStatement cl = db.callableStatement("{call deleteUser(?)}");
+            CallableStatement cl = db.callableStatement("{call deleteService(?)}");
             cl.setInt(1, userID);
             int rows = cl.executeUpdate();
             if (rows > 0) {
@@ -37,7 +37,7 @@ public class User {
 
     public void updateUser(int userID, String name, String email, boolean isAdmin) {
         try {
-            CallableStatement cl = db.callableStatement("{call updateUser (?, ?, ?, ?)}");
+            CallableStatement cl = db.callableStatement("{call updateService (?, ?, ?, ?)}");
 
             cl.setInt(1, userID);
             cl.setString(2, name);

@@ -27,6 +27,7 @@ public class OrderService extends JPanel {
 
         addServiceIDs();
         addCustomerIDs();
+        orderServiceButtonEvent();
     }
 
     private void addCustomerIDs() {
