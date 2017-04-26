@@ -17,7 +17,8 @@ import oracle.jrockit.jfr.JFR;
 public class MainFrame extends JFrame {
     private GridBagLayout grid = new GridBagLayout();
     private JLabel headline;
-    private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService, userOverviewPanel, roomOverviewPanel;
+    private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService, userOverviewPanel, roomOverviewPanel,
+            serviceOverviewPanel;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
             servicesMenu, mainMenu;
@@ -55,6 +56,7 @@ public class MainFrame extends JFrame {
         addServiceButtonEvent();
         userOverviewButtonEvent();
         viewAllRooms();
+        serviceOverview();
     }
 
 
@@ -181,6 +183,19 @@ public class MainFrame extends JFrame {
         });
     }
 
+    private void serviceOverview() {
+        viewServicesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                dymanicPanel.remove(serviceOverviewPanel);
+                serviceOverviewPanel = new ServiceOverview();
+                dymanicPanel.add(serviceOverviewPanel);
+                serviceOverviewPanel.setVisible(true);
+            }
+        });
+    }
+
     private void disablePanels() {
         mainPanel.setVisible(false);
         createUser.setVisible(false);
@@ -188,6 +203,7 @@ public class MainFrame extends JFrame {
         addService.setVisible(false);
         roomOverviewPanel.setVisible(false);
         userOverviewPanel.setVisible(false);
+        serviceOverviewPanel.setVisible(false);
     }
 
     /**
@@ -231,6 +247,7 @@ public class MainFrame extends JFrame {
         exitButton = new JMenuItem();
         userOverviewPanel = new UserOverview();
         roomOverviewPanel = new RoomOverview();
+        serviceOverviewPanel = new ServiceOverview();
 
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -358,6 +375,7 @@ public class MainFrame extends JFrame {
         dymanicPanel.add(addService, gc);
         dymanicPanel.add(userOverviewPanel, gc);
         dymanicPanel.add(roomOverviewPanel, gc);
+        dymanicPanel.add(serviceOverviewPanel, gc);
 
         disablePanels();
         mainPanel.setVisible(true);
