@@ -137,12 +137,4 @@ public class AddMenu extends JPanel {
         this.add(addMenuButton, c);
 
     }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setVisible(true);
-        frame.setPreferredSize(new Dimension(400, 400));
-        AddMenu addMenu = new AddMenu();
-        frame.add(addMenu);
-    }
 }

@@ -81,24 +81,15 @@ public class Room {
         }
     }
 
-    public ArrayList<Integer> getIDs() {
-        ArrayList<Integer> ids = new ArrayList<>();
-
-        try {
-            PreparedStatement ps = db.preparedStatement("SELECT fldRoomID FROM tblRoom");
-
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()) {
-                ids.add(rs.getInt(1));
-            }
-
-            return ids;
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public ArrayList<Integer> getRoomID() throws SQLException {
+        ArrayList<Integer> id = new ArrayList<>();
+        ResultSet rs = db.resultSet("SELECT fldRoomID from tblRoom");
+        while (rs.next()) {
+            id.add(rs.getInt(1));
         }
 
-        return null;
+
+        return id;
     }
 
     public void insertRoom(String roomSize, String description, BigDecimal price) {

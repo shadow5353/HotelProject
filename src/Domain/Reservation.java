@@ -33,7 +33,7 @@ public class Reservation {
         this.dateTo = dateTo;
 
         try {
-            CallableStatement cl = db.callableStatement("{(call insertReservation (?, ?, ?, ?, ?))}");
+            CallableStatement cl = db.callableStatement("{call insertReservation (?, ?, ?, ?, ?)}");
 
             cl.setInt(1, this.customerID);
             cl.setInt(2, this.roomID);
@@ -43,12 +43,7 @@ public class Reservation {
 
             cl.executeUpdate();
 
-            Customer customer = new Customer();
-            customer.getCustomer(this.customerID);
-
-            String customerName = customer.getFirstname() + " " + customer.getLastname();
-
-            messageDialog.infoMessage("Room: " + this.roomID + " have been booked for " + customerName + " from: " + dateFrom + " to: " + dateTo);
+            messageDialog.infoMessage("Room: " + this.roomID + " have been booked for " + customerID + " from: " + dateFrom + " to: " + dateTo);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,7 +51,7 @@ public class Reservation {
 
     public boolean checkAvalibility(int roomID, Date dateFrom, Date dateTo) {
         try {
-            CallableStatement cl = db.callableStatement("{(call checkAvalibility (?, ?, ?))}");
+            CallableStatement cl = db.callableStatement("{call checkAvalibility (?, ?, ?)}");
 
             cl.setInt(1, roomID);
             cl.setDate(2, dateFrom);
@@ -64,10 +59,10 @@ public class Reservation {
 
             ResultSet rs = cl.executeQuery();
 
-            if(rs.next()) {
-                return true;
-            } else {
+            if (rs.next()) {
                 return false;
+            } else {
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,7 +85,8 @@ public class Reservation {
             this.dateFrom = cl.getDate("fldDateFrom");
             this.dateTo = cl.getDate("fldDateTo");
 
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+        }
     }
 
     public int getCustomerID() {
@@ -111,5 +107,9 @@ public class Reservation {
 
     public Date getDateTo() {
         return dateTo;
+    }
+
+    public void deleteReservation(int bookingID) {
+
     }
 }

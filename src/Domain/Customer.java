@@ -69,6 +69,40 @@ public class Customer {
         return customerIDs;
     }
 
+    public int getCustomerID(int phoneNo) throws SQLException {
+        PreparedStatement ps = db.preparedStatement("SELECT fldCustomerID FROM tblCustomer WHERE fldPhoneno = ?");
+        ps.setInt(1, phoneNo);
+        ResultSet resultSet = ps.executeQuery();
+        if(resultSet.next()){
+            return resultSet.getInt(1);
+        }
+        return 0;
+
+
+    }
+
+    public ArrayList<String> checkIfCustomerExist(String customerMail) throws SQLException {
+        ArrayList<String> informationAboutCustomer = new ArrayList<>();
+        PreparedStatement ps = db.preparedStatement("SELECT * FROM tblCustomer WHERE fldEmail = ?");
+        ps.setString(1, customerMail);
+        ResultSet resultSet = ps.executeQuery();
+        if (resultSet.next()) {
+            informationAboutCustomer.add(String.valueOf(resultSet.getInt(1)));
+            informationAboutCustomer.add(resultSet.getString(2));
+            informationAboutCustomer.add(resultSet.getString(3));
+            informationAboutCustomer.add(resultSet.getString(4));
+            informationAboutCustomer.add(String.valueOf(resultSet.getInt(5)));
+            informationAboutCustomer.add(resultSet.getString(6));
+            informationAboutCustomer.add(resultSet.getString(7));
+            informationAboutCustomer.add(String.valueOf(resultSet.getInt(8)));
+        } else {
+            return informationAboutCustomer;
+        }
+
+        return informationAboutCustomer;
+
+    }
+
     public void insertCustomer(String firstname, String lastname, String email, int phone, String address, String city, int postalcode) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -79,7 +113,7 @@ public class Customer {
         this.postalcode = postalcode;
 
         try {
-            PreparedStatement ps = db.preparedStatement("SELECT * FROM tblCustomers WHERE fldEmail = ?");
+            PreparedStatement ps = db.preparedStatement("SELECT * FROM tblCustomer WHERE fldEmail = ?");
 
             ps.setString(1, this.email);
 

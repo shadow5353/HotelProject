@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+import Domain.Controller;
 import Domain.UserInfo;
 import oracle.jrockit.jfr.JFR;
 
@@ -18,7 +19,7 @@ public class MainFrame extends JFrame {
     private GridBagLayout grid = new GridBagLayout();
     private JLabel headline;
     private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService, userOverviewPanel, roomOverviewPanel,
-            serviceOverviewPanel, orderServicePanel, addMenuPanel, addCateringPanel;
+            serviceOverviewPanel, orderServicePanel, addMenuPanel, addCateringPanel, addReservation;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
             servicesMenu, mainMenu;
@@ -60,6 +61,7 @@ public class MainFrame extends JFrame {
         orderServiceButton();
         addMenuButtonEvent();
         setAddCateringsButtonEvent();
+        addReservationButtonEvent();
     }
 
 
@@ -233,6 +235,16 @@ public class MainFrame extends JFrame {
         });
     }
 
+    private void addReservationButtonEvent() {
+        createReservationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                addReservation.setVisible(true);
+            }
+        });
+    }
+
     private void disablePanels() {
         mainPanel.setVisible(false);
         createUser.setVisible(false);
@@ -244,6 +256,7 @@ public class MainFrame extends JFrame {
         orderServicePanel.setVisible(false);
         addMenuPanel.setVisible(false);
         addCateringPanel.setVisible(false);
+        addReservation.setVisible(false);
     }
 
     /**
@@ -292,6 +305,7 @@ public class MainFrame extends JFrame {
         orderServicePanel = new OrderService();
         addMenuPanel = new AddMenu();
         addCateringPanel = new AddCatering();
+        addReservation = new ReservationGUI(new Controller());
 
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -426,6 +440,7 @@ public class MainFrame extends JFrame {
         dymanicPanel.add(orderServicePanel, gc);
         dymanicPanel.add(addMenuPanel, gc);
         dymanicPanel.add(addCateringPanel, gc);
+        dymanicPanel.add(addReservation, gc);
 
         disablePanels();
         mainPanel.setVisible(true);

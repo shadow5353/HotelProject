@@ -11,10 +11,19 @@ import java.sql.SQLException;
  * Created by Jacob on 18-04-2017.
  */
 public class LoginController {
+    private static LoginController instance = null;
     private DBFacade dbFacade = new DBFacade();
     private int userID;
 
     public LoginController() {}
+
+    public static LoginController getInstance(){
+        if(instance==null){
+            instance = new LoginController();
+        }
+
+        return instance;
+    }
 
     /**
      * Check if the user exist in the database

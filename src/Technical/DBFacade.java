@@ -19,6 +19,13 @@ public class DBFacade {
         openConnection();
     }
 
+    public ResultSet resultSet (String sql) throws SQLException {
+        ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        return rs;
+    }
+
     /**
      * Open connection to the database
      */
