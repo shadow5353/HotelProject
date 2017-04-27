@@ -1,12 +1,13 @@
 package Domain;
 
+/**
+ * Created by Kasper on 25-04-2017.
+ */
+
 import Technical.DBFacade;
 import Technical.MessageDialog;
 
-import java.sql.CallableStatement;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by Jacob on 24-04-2017.
@@ -109,7 +110,17 @@ public class Reservation {
         return dateTo;
     }
 
-    public void deleteReservation(int bookingID) {
+    public void deleteReservation(int bookingID) throws SQLException {
+        PreparedStatement ps = db.preparedStatement("DELETE FROM tblReservation WHERE fldBookingID = ?");
+        ps.setInt(1, bookingID);
 
+        ps.executeUpdate();
+    }
+
+    public ResultSet getData() throws SQLException {
+        PreparedStatement ps = db.preparedStatement("SELECT * FROM tblReservation");
+        ResultSet rs = ps.executeQuery();
+
+        return rs;
     }
 }

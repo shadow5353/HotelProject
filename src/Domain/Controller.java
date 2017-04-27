@@ -1,6 +1,7 @@
 package Domain;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class Controller {
     Reservation reservation;
     Customer customer;
     private Object userID;
+    private ResultSet dataToOverview;
 
     public Controller() {
         room = new Room();
@@ -31,7 +33,7 @@ public class Controller {
         return customer.checkIfCustomerExist(customerMail);
     }
 
-    public void makeReservation(int phoneNo, int roomID, int userID, java.sql.Date dateFrom, java.sql.Date dateTo) throws SQLException {
+    public void makeReservation(int phoneNo, int roomID, int userID, Date dateFrom, Date dateTo) throws SQLException {
         int customerID = getCustomerID(phoneNo);
         reservation.insertReservation(customerID, roomID, 1, dateFrom, dateTo);
     }
@@ -47,4 +49,14 @@ public class Controller {
     public Object getUserID() {
         return userID;
     }
+
+    public void deleteReservation(int bookingID) throws SQLException {
+        reservation.deleteReservation(bookingID);
+    }
+
+    public ResultSet getDataToOverview() throws SQLException {
+       return reservation.getData();
+    }
+
+
 }
