@@ -47,8 +47,4 @@ public class Menu {
             e.printStackTrace();
         }
     }
-    public void updateService(String dishName, String description, BigDecimal price)
-    {
-
-    }
 }
