@@ -49,8 +49,8 @@ public class OrderService extends JPanel {
         orderServiceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int customerID = Integer.parseInt(customerIDs.getName());
-                int serviceID = Integer.parseInt(serviceIDs.getName());
+                int customerID = Integer.parseInt(customerIDs.getSelectedItem().toString());
+                int serviceID = Integer.parseInt(serviceIDs.getSelectedItem().toString());
 
                 ServiceOrder serviceOrder = new ServiceOrder();
 
