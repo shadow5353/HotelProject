@@ -41,4 +41,18 @@ public class Arrangement {
 
         }
     }
+
+    public void deleteRoom(int arrangementID) {
+        try {
+            CallableStatement cl = db.callableStatement("{call deleteArrangement (?)}");
+
+            cl.setInt(1, arrangementID);
+
+            cl.executeUpdate();
+
+            messageDialog.infoMessage("Arrangement: " + arrangementID + " have been deleted!");
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+    }
 }

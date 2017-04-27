@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
     private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService, userOverviewPanel, roomOverviewPanel,
             serviceOverviewPanel, orderServicePanel, addMenuPanel, addCateringPanel, addReservation, addArrangementPanel,
             viewAllArrangementPanel, reservationOverviewPanel, cateringOverviewPanel, orderCatering, menuOverviewPanel,
-            createCustomerPanel;
+            createCustomerPanel, arrangementOverviewPanel, customerOverviewPanel;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
             servicesMenu, mainMenu, customerMenu;
@@ -71,6 +71,8 @@ public class MainFrame extends JFrame {
         orderCateringButtonEvent();
         menuOverviewButtonEvent();
         createCustomerButtonEvent();
+        arrangementOverviewButton();
+        viewAllCustomers();
     }
 
 
@@ -340,6 +342,32 @@ public class MainFrame extends JFrame {
         });
     }
 
+    private void arrangementOverviewButton() {
+        viewAllArrangementsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                dymanicPanel.remove(arrangementOverviewPanel);
+                arrangementOverviewPanel = new ArrangementOverview();
+                dymanicPanel.add(arrangementOverviewPanel);
+                arrangementOverviewPanel.setVisible(true);
+            }
+        });
+    }
+
+    private void viewAllCustomers() {
+        viewCustomerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                dymanicPanel.remove(customerOverviewPanel);
+                customerOverviewPanel = new CustomerOverview();
+                dymanicPanel.add(customerOverviewPanel);
+                customerOverviewPanel.setVisible(true);
+            }
+        });
+    }
+
     private void disablePanels() {
         mainPanel.setVisible(false);
         createUser.setVisible(false);
@@ -359,6 +387,8 @@ public class MainFrame extends JFrame {
         cateringOverviewPanel.setVisible(false);
         menuOverviewPanel.setVisible(false);
         createCustomerPanel.setVisible(false);
+        arrangementOverviewPanel.setVisible(false);
+        customerOverviewPanel.setVisible(false);
     }
 
     /**
@@ -418,6 +448,8 @@ public class MainFrame extends JFrame {
         orderCatering = new OrderCatering();
         menuOverviewPanel = new MenuOverview();
         createCustomerPanel = new CreateCustomerGUI(new Controller());
+        arrangementOverviewPanel = new ArrangementOverview();
+        customerOverviewPanel = new CustomerOverview();
 
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -569,6 +601,8 @@ public class MainFrame extends JFrame {
         dymanicPanel.add(orderCatering, gc);
         dymanicPanel.add(menuOverviewPanel, gc);
         dymanicPanel.add(createCustomerPanel,gc);
+        dymanicPanel.add(arrangementOverviewPanel, gc);
+        dymanicPanel.add(customerOverviewPanel, gc);
 
         disablePanels();
         mainPanel.setVisible(true);
