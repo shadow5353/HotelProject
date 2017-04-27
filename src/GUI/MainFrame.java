@@ -19,14 +19,15 @@ public class MainFrame extends JFrame {
     private GridBagLayout grid = new GridBagLayout();
     private JLabel headline;
     private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService, userOverviewPanel, roomOverviewPanel,
-            serviceOverviewPanel, orderServicePanel, addMenuPanel, addCateringPanel, addReservation;
+            serviceOverviewPanel, orderServicePanel, addMenuPanel, addCateringPanel, addReservation, addArrangementPanel,
+            viewAllArrangementPanel;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
-            servicesMenu, mainMenu;
+            servicesMenu, mainMenu, customerMenu;
     private JMenuItem viewAllArrangementsButton, viewAllCateringsButton, viewAllReservationButton, viewAllUsersButton,
             viewMenuButton, viewRoomsButton, viewServicesButton, logoutButton, createReservationButton, addUserButton,
             addToMenuButton, addServiceButton, addRoomButton, addCateringsButton, addArrangementButton,
-            orderCateringButton, dailyOverviewButton, exitButton, orderServiceButton;
+            orderCateringButton, dailyOverviewButton, exitButton, orderServiceButton, createCustomerButton, viewCustomerButton;
     private UserInfo userInfo;
 
     public MainFrame(int userID) {
@@ -62,6 +63,8 @@ public class MainFrame extends JFrame {
         addMenuButtonEvent();
         setAddCateringsButtonEvent();
         addReservationButtonEvent();
+        addArangementButtonEvent();
+        addViewAllArrangementsButtonEvent();
     }
 
 
@@ -245,6 +248,29 @@ public class MainFrame extends JFrame {
         });
     }
 
+    private void addArangementButtonEvent() {
+        addArrangementButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                addArrangementPanel.setVisible(true);
+            }
+        });
+    }
+
+    private void addViewAllArrangementsButtonEvent() {
+        viewAllArrangementsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                dymanicPanel.remove(viewAllArrangementPanel);
+                viewAllArrangementPanel = new ViewAllArrangements();
+                dymanicPanel.add(viewAllArrangementPanel);
+                viewAllArrangementPanel.setVisible(true);
+            }
+        });
+    }
+
     private void disablePanels() {
         mainPanel.setVisible(false);
         createUser.setVisible(false);
@@ -257,6 +283,8 @@ public class MainFrame extends JFrame {
         addMenuPanel.setVisible(false);
         addCateringPanel.setVisible(false);
         addReservation.setVisible(false);
+        addArrangementPanel.setVisible(false);
+        viewAllArrangementPanel.setVisible(false);
     }
 
     /**
@@ -296,6 +324,9 @@ public class MainFrame extends JFrame {
         addUserButton = new javax.swing.JMenuItem();
         viewAllUsersButton = new javax.swing.JMenuItem();
         orderServiceButton = new JMenuItem();
+        customerMenu = new JMenu();
+        createCustomerButton = new JMenuItem();
+        viewCustomerButton = new JMenuItem();
         createUser = new CreateUser();
         dymanicPanel = new JPanel();
         exitButton = new JMenuItem();
@@ -306,6 +337,8 @@ public class MainFrame extends JFrame {
         addMenuPanel = new AddMenu();
         addCateringPanel = new AddCatering();
         addReservation = new ReservationGUI(new Controller());
+        addArrangementPanel = new AddArrangement();
+        viewAllArrangementPanel = new ViewAllArrangements();
 
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -339,6 +372,15 @@ public class MainFrame extends JFrame {
         mainMenu.add(dailyOverviewButton);
 
         menu.add(mainMenu);
+
+        createCustomerButton.setText("Create Customer");
+        customerMenu.add(createCustomerButton);
+
+        viewCustomerButton.setText("View Customer");
+        customerMenu.add(viewCustomerButton);
+
+        customerMenu.setText("Customer");
+        menu.add(customerMenu);
 
         reservationMenu.setText("Reservation");
 
@@ -441,6 +483,8 @@ public class MainFrame extends JFrame {
         dymanicPanel.add(addMenuPanel, gc);
         dymanicPanel.add(addCateringPanel, gc);
         dymanicPanel.add(addReservation, gc);
+        dymanicPanel.add(addArrangementPanel, gc);
+        dymanicPanel.add(viewAllArrangementPanel, gc);
 
         disablePanels();
         mainPanel.setVisible(true);

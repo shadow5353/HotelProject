@@ -54,7 +54,7 @@ public class Customer {
         ArrayList<Integer> customerIDs = new ArrayList<>();
 
         try {
-            PreparedStatement ps = db.preparedStatement("SELECT fldCustomerID");
+            PreparedStatement ps = db.preparedStatement("SELECT fldCustomerID FROM tblCustomer");
 
             ResultSet rs = ps.executeQuery();
 
