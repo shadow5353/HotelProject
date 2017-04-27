@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
     private JLabel headline;
     private JPanel mainPanel, createUser, dymanicPanel, addRoomPanel, addService, userOverviewPanel, roomOverviewPanel,
             serviceOverviewPanel, orderServicePanel, addMenuPanel, addCateringPanel, addReservation, addArrangementPanel,
-            viewAllArrangementPanel, reservationOverviewPanel;
+            viewAllArrangementPanel, reservationOverviewPanel, cateringOverviewPanel, orderCatering;
     private JMenuBar menu;
     private JMenu arrangementMenu, cateringMenu, managementMenu, nameMenu, reservationMenu, restaurantMenu, roomsMenu,
             servicesMenu, mainMenu, customerMenu;
@@ -66,6 +66,8 @@ public class MainFrame extends JFrame {
         addArangementButtonEvent();
         addViewAllArrangementsButtonEvent();
         viewAllReservationButton();
+        cateringOverviewButtonEvent();
+        orderCateringButtonEvent();
     }
 
 
@@ -218,7 +220,7 @@ public class MainFrame extends JFrame {
         });
     }
 
-    private void setAddCateringsButtonEvent(){
+    private void setAddCateringsButtonEvent() {
         addCateringsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -285,6 +287,31 @@ public class MainFrame extends JFrame {
         });
     }
 
+    private void orderCateringButtonEvent() {
+        orderCateringButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                orderCatering.setVisible(true);
+            }
+        });
+    }
+
+    private void cateringOverviewButtonEvent() {
+        viewAllCateringsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disablePanels();
+                cateringOverviewPanel = new CateringOverview();
+                cateringOverviewPanel.setVisible(true);
+                GridBagConstraints gc = new GridBagConstraints();
+                gc.gridx = 0;
+                gc.gridy = 0;
+                dymanicPanel.add(cateringOverviewPanel, gc);
+            }
+        });
+    }
+
     private void disablePanels() {
         mainPanel.setVisible(false);
         createUser.setVisible(false);
@@ -300,6 +327,8 @@ public class MainFrame extends JFrame {
         addArrangementPanel.setVisible(false);
         viewAllArrangementPanel.setVisible(false);
         reservationOverviewPanel.setVisible(false);
+        orderCatering.setVisible(false);
+        cateringOverviewPanel.setVisible(false);
     }
 
     /**
@@ -355,6 +384,8 @@ public class MainFrame extends JFrame {
         addArrangementPanel = new AddArrangement();
         viewAllArrangementPanel = new ViewAllArrangements();
         reservationOverviewPanel = new ReservationOverview(new Controller());
+        cateringOverviewPanel = new CateringOverview();
+        orderCatering = new OrderCatering();
 
         getContentPane().setLayout(new java.awt.CardLayout());
 
@@ -502,6 +533,8 @@ public class MainFrame extends JFrame {
         dymanicPanel.add(addArrangementPanel, gc);
         dymanicPanel.add(viewAllArrangementPanel, gc);
         dymanicPanel.add(reservationOverviewPanel, gc);
+        dymanicPanel.add(cateringOverviewPanel, gc);
+        dymanicPanel.add(orderCatering, gc);
 
         disablePanels();
         mainPanel.setVisible(true);
