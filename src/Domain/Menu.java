@@ -47,4 +47,36 @@ public class Menu {
             e.printStackTrace();
         }
     }
+    public void updateMenu(int menuID, String dishName, String description, BigDecimal price)
+    {
+        try {
+            CallableStatement cl = db.callableStatement("{call updateMenu (?, ?, ?, ?)}");
+
+            cl.setInt(1, menuID);
+            cl.setString(2, dishName);
+            cl.setString(3, description);
+            cl.setBigDecimal(4, price);
+            System.out.println(dishName);
+
+            cl.executeUpdate();
+
+            messageDialog.infoMessage("Service: " + dishName + " have been updated!");
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+    }
+
+    public void deleteMenu(int ID){
+        try {
+            CallableStatement cl = db.callableStatement("{call deleteMenu (?)}");
+
+            cl.setInt(1, ID);
+
+            cl.executeUpdate();
+
+            messageDialog.infoMessage("Dish Number: " + ID + " have been removed!");
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+    }
 }
