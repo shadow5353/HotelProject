@@ -147,13 +147,4 @@ public class MenuOverview extends JPanel {
         });
     }
 
-    public static void main(String[] args) throws SQLException {
-        MenuOverview view = new MenuOverview();
-        JFrame frame = new JFrame();
-        frame.setSize(600, 400);
-        frame.add(view);
-        frame.setVisible(true);
-        String ok = "";
-    }
-
 }

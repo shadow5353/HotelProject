@@ -71,7 +71,6 @@ public class MainFrame extends JFrame {
         orderCateringButtonEvent();
         menuOverviewButtonEvent();
         createCustomerButtonEvent();
-        arrangementOverviewButton();
         viewAllCustomers();
     }
 
@@ -272,7 +271,7 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 disablePanels();
                 dymanicPanel.remove(viewAllArrangementPanel);
-                viewAllArrangementPanel = new ViewAllArrangements();
+                viewAllArrangementPanel = new ArrangementOverview();
                 dymanicPanel.add(viewAllArrangementPanel);
                 viewAllArrangementPanel.setVisible(true);
             }
@@ -338,19 +337,6 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 disablePanels();
                 createCustomerPanel.setVisible(true);
-            }
-        });
-    }
-
-    private void arrangementOverviewButton() {
-        viewAllArrangementsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                disablePanels();
-                dymanicPanel.remove(arrangementOverviewPanel);
-                arrangementOverviewPanel = new ArrangementOverview();
-                dymanicPanel.add(arrangementOverviewPanel);
-                arrangementOverviewPanel.setVisible(true);
             }
         });
     }
@@ -442,7 +428,6 @@ public class MainFrame extends JFrame {
         addCateringPanel = new AddCatering();
         addReservation = new ReservationGUI(new Controller());
         addArrangementPanel = new AddArrangement();
-        viewAllArrangementPanel = new ViewAllArrangements();
         reservationOverviewPanel = new ReservationOverview(new Controller());
         cateringOverviewPanel = new CateringOverview();
         orderCatering = new OrderCatering();

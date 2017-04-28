@@ -24,8 +24,8 @@ public class ArrangementOverview extends JPanel {
     private DBFacade dbFacade = new DBFacade();
 
     public ArrangementOverview() {
-//        initComponents();
-//        getCustomerOverview();
+        initComponents();
+        getCustomerOverview();
 //        updateButtonEvent();
 //        deleteButtonEvent();
     }
@@ -100,7 +100,7 @@ public class ArrangementOverview extends JPanel {
         serviceTable.setAutoCreateRowSorter(true);
 
         headline.setFont(new java.awt.Font("Dialog", 1, 25)); // NOI18N
-        headline.setText("Coming Soon In next DLC");
+        headline.setText("Arrangement Overview");
 
         jScrollPane1.setViewportView(serviceTable);
 
